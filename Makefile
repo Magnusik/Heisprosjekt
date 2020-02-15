@@ -1,4 +1,4 @@
-SOURCES := main.c elevator_control.c
+SOURCES := main.c elevator_control.c queue.c
 
 SOURCE_DIR := source
 BUILD_DIR := build

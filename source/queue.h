@@ -9,4 +9,4 @@
  * @warning Changes @p order_button_matrix.
  */
 
-void add_order(int* p_order_matrix[][]);
+void update_new_order(int *p_order_matrix[][3]);

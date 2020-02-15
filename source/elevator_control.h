@@ -5,5 +5,3 @@
 */
 int init_elevator();
 
-
-void update_all_order_lights(const int* order_matrix);

@@ -6,7 +6,7 @@
 #include "elevator_control.h"
 
 
-void add_order(int* p_order_matrix[][]){
+void update_new_order(int *p_order_matrix[][3]){
 
         for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
             for (int order_type = 0; order_type < HARDWARE_NUMER_OF_ORDER_BUTTONS; order_type++ ){
