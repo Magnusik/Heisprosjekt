@@ -3,6 +3,7 @@
 #include <signal.h>
 #include "hardware.h"
 #include "elevator_control.h"
+#define HARDWARE_NUMER_OF_ORDER_BUTTONS 3
 
 typedef enum {
   Software_state_waiting,
@@ -12,7 +13,10 @@ typedef enum {
   Software_state_stop
 }Software_state;
 
+//Global variables
 int current_floor;
+Software_state state; 
+static int order_button_matrix[HARDWARE_NUMBER_OF_FLOORS][HARDWARE_NUMER_OF_ORDER_BUTTONS]={0};
 
 static void sigint_handler(int sig){
     (void)(sig);
@@ -33,26 +37,27 @@ int main(){
 
   current_floor = init_elevator();
   printf("current floor is: %d\n",current_floor+1 );
+  state=Software_state_waiting;
+  
+  while(1){
+    switch(state)
+    {
+      case Software_state_waiting:
 
-  // while(1){
-  //   switch(Software_state)
-  //   {
-  //     case Software_state_waiting:
+        break;
+      case Software_state_idle:
 
-  //       break;
-  //     case Software_state_idle:
+        break;
+      case Software_state_moving_up:
 
-  //       break;
-  //     case Software_state_moving_up:
+        break;
+      case Software_state_moving_down:
 
-  //       break;
-  //     case Software_state_moving_down:
-
-  //       break;
-  //     case Software_state_stop:
-  //       break;
-  //   }
-  // }
+        break;
+      case Software_state_stop:
+        break;
+    }
+  }
 
   return 0;
 }

@@ -4,3 +4,6 @@
 *@return int of @p current_floor, -1 if it didnt reach a floor sensor.
 */
 int init_elevator();
+
+
+void update_all_order_lights(const int* order_matrix);
