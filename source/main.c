@@ -61,7 +61,7 @@ int main(){
     switch(state)
     {
       case Software_state_waiting:
-        // int *p_matrix = &(order_button_matrix[0][0]);
+        // *p_matrix = &(order_button_matrix[0][0]);
         update_new_order(order_button_matrix[0][0]);
 
         break;
