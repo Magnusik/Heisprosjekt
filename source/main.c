@@ -61,8 +61,10 @@ int main(){
     switch(state)
     {
       case Software_state_waiting:
-        // *p_matrix = &(order_button_matrix[0][0]);
-        update_new_order(order_button_matrix[0][0]);
+        ;
+        int *ap;
+        ap = &(order_button_matrix[0][0]);
+        update_new_order(ap);
 
         break;
       case Software_state_idle:
