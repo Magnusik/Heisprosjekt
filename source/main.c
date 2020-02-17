@@ -17,7 +17,11 @@ typedef enum {
 //Global variables
 int current_floor;
 Software_state state; 
-static int order_button_matrix[HARDWARE_NUMBER_OF_FLOORS][HARDWARE_NUMER_OF_ORDER_BUTTONS];
+static int order_button_matrix[HARDWARE_NUMBER_OF_FLOORS][HARDWARE_NUMER_OF_ORDER_BUTTONS]={
+{0,0,0},
+{0,0,0},
+{0,0,0},
+{0,0,0}};
 
 
 
@@ -29,18 +33,6 @@ static void sigint_handler(int sig){
 }
 
 int main(){
-
-
-
-  for (int i = 0;i<4;i++){
-    for (int j = 0; j<3;j++){
-      order_button_matrix[i][j] = 0;
-
-    }
-  }
-
-
-
 
 
 
@@ -62,9 +54,10 @@ int main(){
     {
       case Software_state_waiting:
         ;
-        int *ap;
-        ap = &(order_button_matrix[0][0]);
-        update_new_order(ap);
+        int *pi;
+        pi = &order_button_matrix[0][0];
+        // *p_matrix = &(order_button_matrix[0][0]);
+        update_new_order(pi);
 
         break;
       case Software_state_idle:
