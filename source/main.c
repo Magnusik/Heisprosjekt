@@ -3,13 +3,7 @@
 #include "queue.h"
 #define HARDWARE_NUMER_OF_ORDER_BUTTONS 3
 
-typedef enum {
-  Software_state_waiting,
-  Software_state_idle,
-  Software_state_moving_up,
-  Software_state_moving_down,
-  Software_state_stop
-}Software_state;
+
 
 //Global variables
 int current_floor;
@@ -71,22 +65,33 @@ int main(){
     switch(state)
     {
       case Software_state_waiting:
-        ;
+      ;
         int *p_order_matrix = &order_button_matrix[0][0];
         update_new_order(p_order_matrix);
-        int *p_clear_order= &order_button_matrix[0][0];
-        clear_all_orders(p_clear_order);
+        // int *p_clear_order= &order_button_matrix[0][0];
+        // clear_all_orders(p_clear_order);
+        // int *p_clear_floor= &order_button_matrix[0][0];
+        // clear_order_on_floor(p_clear_floor, 2);
+        int order_floor = check_orders_wating(order_button_matrix);
+        if(order_floor !=-1){
+          state = go_up_or_down(order_floor, current_floor);
+        }
+        printf("wait");
         break;
       case Software_state_idle:
+        printf("idle");
 
         break;
       case Software_state_moving_up:
+        printf("up");
 
         break;
       case Software_state_moving_down:
+        printf("down");
 
         break;
       case Software_state_stop:
+        printf("stop");
         break;
     }
   }

@@ -31,3 +31,15 @@ void clear_all_orders(int *p_matrix){
         }
     }
 }
+
+
+
+
+void clear_order_on_floor(int *p_matrix, int floor){
+    
+    for (int order_type = 0; order_type < HARDWARE_NUMER_OF_ORDER_BUTTONS; order_type++ ){
+
+        *(p_matrix+(order_type+floor*3)) = 0;
+        hardware_command_order_light(floor,order_type,0);
+    }
+}

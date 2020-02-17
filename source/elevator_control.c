@@ -16,3 +16,28 @@ int init_elevator(){
 }
 
 
+int check_orders_wating(int order_matrix[4][3]){
+
+  for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
+    for (int order_type = 0; order_type < HARDWARE_NUMER_OF_ORDER_BUTTONS; order_type++ ){
+      if(order_matrix[f][order_type]==1){
+        return f;
+      }
+    }
+  }
+  return -1;
+}
+
+
+Software_state go_up_or_down(int order_floor,int current_floor){
+  if(order_floor > current_floor){
+    return Software_state_moving_up;
+
+  }else if(order_floor > current_floor){
+    return Software_state_moving_down;
+
+  }else {
+    return Software_state_idle;
+  }
+}
+
