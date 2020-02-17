@@ -10,7 +10,23 @@ void update_new_order(int *p_matrix) {
         for (int order_type = 0; order_type < HARDWARE_NUMER_OF_ORDER_BUTTONS; order_type++ ){
             if(hardware_read_order(f, order_type)){
                 *p_matrix = 1;
+                //printf("ordertype: %d floor: %d pressed = %d",order_type,f,*p_matrix);
+                hardware_command_order_light(f,order_type,1);
             }
+            p_matrix++;
+        }
+    }
+}
+
+
+//hardware_read_order(f, order_type)
+
+
+void clear_all_orders(int *p_matrix){
+    for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
+        for (int order_type = 0; order_type < HARDWARE_NUMER_OF_ORDER_BUTTONS; order_type++ ){
+            *p_matrix = 0;
+            hardware_command_order_light(f,order_type,0);
             p_matrix++;
         }
     }

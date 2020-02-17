@@ -1,6 +1,3 @@
-#include <stdio.h>
-#include <stdlib.h>
-#include <signal.h>
 #include "hardware.h"
 #include "elevator_control.h"
 #include "queue.h"
@@ -22,6 +19,25 @@ static int order_button_matrix[HARDWARE_NUMBER_OF_FLOORS][HARDWARE_NUMER_OF_ORDE
 {0,0,0},
 {0,0,0},
 {0,0,0}};
+
+
+
+
+
+static void clear_all_order_lights(){
+    HardwareOrder order_types[3] = {
+        HARDWARE_ORDER_UP,
+        HARDWARE_ORDER_INSIDE,
+        HARDWARE_ORDER_DOWN
+    };
+
+    for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
+        for(int i = 0; i < 3; i++){
+            HardwareOrder type = order_types[i];
+            hardware_command_order_light(f, type, 0);
+        }
+    }
+}
 
 
 
@@ -48,17 +64,18 @@ int main(){
   current_floor = init_elevator();
   printf("current floor is: %d\n",current_floor+1 );
   state=Software_state_waiting;
+
+  clear_all_order_lights();
   
   while(1){
     switch(state)
     {
       case Software_state_waiting:
         ;
-        int *pi;
-        pi = &order_button_matrix[0][0];
-        // *p_matrix = &(order_button_matrix[0][0]);
-        update_new_order(pi);
-
+        int *p_order_matrix = &order_button_matrix[0][0];
+        update_new_order(p_order_matrix);
+        int *p_clear_order= &order_button_matrix[0][0];
+        clear_all_orders(p_clear_order);
         break;
       case Software_state_idle:
 
