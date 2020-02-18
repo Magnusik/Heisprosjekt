@@ -1,6 +1,7 @@
 #include "hardware.h"
 #include "channels.h"
 #include "io.h"
+
 #include <stdlib.h>
 
 static int hardware_legal_floor(int floor, HardwareOrder order_type){

@@ -1,3 +1,5 @@
+#ifndef queue_h
+#define queue_h
 #include "hardware.h"
 
 /**
@@ -30,5 +32,8 @@ void clear_all_orders(int *p_matrix);
 
 
 void clear_order_on_floor(int *p_matrix, int floor);
+
+
+#endif
 
 

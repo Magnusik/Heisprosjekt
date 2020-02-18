@@ -1,4 +1,5 @@
-#pragma once
+#ifndef elevator_control_h
+#define elevator_control_h
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
@@ -44,8 +45,13 @@ int elevator_at_floor();
 
 
 
-HardwareMovement elevator_stop_at_floor_for_moving_up(int current_floor);
+HardwareMovement elevator_stop_at_floor_for_moving_up(int current_floor,int order_button_matrix[4][3]);
 
 
 
-HardwareMovement elevator_stop_at_floor_for_moving_down(int current_floor);
+HardwareMovement elevator_stop_at_floor_for_moving_down(int current_floor,int order_button_matrix[4][3]);
+
+
+
+
+#endif

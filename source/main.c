@@ -82,24 +82,30 @@ int main(){
 
         break;
       case Software_state_moving_up:
-        hardware_command_movement(HARDWARE_MOVEMENT_UP);
-        previous_floor = current_floor;
-        if (previous_floor == current_floor+1){
-
+        //hardware_command_movement(HARDWARE_MOVEMENT_UP);
+    
+        if (elevator_at_floor()!=-1){
+          //printf("%d",elevator_at_floor());
+          elevator_stop = elevator_stop_at_floor_for_moving_up(elevator_at_floor(),order_button_matrix);
+          hardware_command_movement(elevator_stop);
+          //printf("%d",elevator_stop);
         }
+        //printf("%d",order_button_matrix[2][0]);
+
+
 
         //printf("up");
 
         break;
       case Software_state_moving_down:
 
-        hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
+        //hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
 
         if (elevator_at_floor()!=-1){
           current_floor = elevator_at_floor();
-          elevator_stop =elevator_stop_at_floor_for_moving_down(current_floor);
+          elevator_stop =elevator_stop_at_floor_for_moving_down(current_floor,order_button_matrix);
           hardware_command_movement(elevator_stop);
-          printf("Current floor: %d",current_floor);
+          //printf("Current floor: %d",current_floor);
         }
 
 
