@@ -1,6 +1,8 @@
+#pragma once
 #include <stdio.h>
 #include <stdlib.h>
 #include <signal.h>
+#include "hardware.h"
 
 typedef enum {
   Software_state_waiting,
@@ -31,6 +33,19 @@ int check_orders_wating(int order_matrix[4][3]);
  * @param current_floor the floor the elevator is currently on
  * @return state
  */
-
-
 Software_state go_up_or_down(int order_floor,int current_floor);
+
+
+
+
+
+
+int elevator_at_floor();
+
+
+
+HardwareMovement elevator_stop_at_floor_for_moving_up(int current_floor);
+
+
+
+HardwareMovement elevator_stop_at_floor_for_moving_down(int current_floor);
