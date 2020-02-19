@@ -7,3 +7,5 @@
 
 int timer_3_sec();
 
+#endif
+

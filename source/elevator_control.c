@@ -19,7 +19,7 @@ int elevator_init(){
 
 
 
-static void elevator_clear_all_order_lights(){
+void elevator_clear_all_order_lights(){
     HardwareOrder order_types[3] = {
         HARDWARE_ORDER_UP,
         HARDWARE_ORDER_INSIDE,
@@ -37,17 +37,7 @@ static void elevator_clear_all_order_lights(){
 
 
 
-int elevator_check_orders_waiting(int order_matrix[4][3]){
 
-  for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
-    for (int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++ ){
-      if(order_matrix[f][order_type]==1){
-        return f;
-      }
-    }
-  }
-  return -1;
-}
 
 
 Software_state elevator_go_up_or_down(int order_floor,int current_floor){
@@ -80,7 +70,7 @@ int elevator_at_floor(){
 
 
 
-HardwareMovement elevator_stop_at_floor_for_moving_up(int current_floor, int order_button_matrix[4][3]){
+HardwareMovement elevator_movement_at_floor_for_moving_up(int current_floor, int order_button_matrix[4][3]){
 
   if(current_floor == (HARDWARE_NUMBER_OF_FLOORS -1)){
     return HARDWARE_MOVEMENT_STOP;
@@ -104,22 +94,7 @@ return HARDWARE_MOVEMENT_UP;
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-HardwareMovement elevator_stop_at_floor_for_moving_down(int current_floor,int order_button_matrix[4][3]){
+HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor,int order_button_matrix[4][3]){
 
   if(current_floor == 0 ){
     return HARDWARE_MOVEMENT_STOP;
@@ -141,4 +116,27 @@ HardwareMovement elevator_stop_at_floor_for_moving_down(int current_floor,int or
 }
 
 
+
+Software_state elevator_movement_from_idle(int current_floor, HardwareMovement previous_direction){
+
+
+
+    if(queue_check_orders_waiting() == -1){
+      return Software_state_waiting;
+    }
+    else if((current_floor == 3) && queue_check_order_below(current_floor)){
+      return Software_state_moving_down;
+    } 
+    else if((current_floor == 0) && queue_check_order_above(current_floor)){
+      return Software_state_moving_up;
+    } 
+    else if((previous_direction == HARDWARE_MOVEMENT_UP) && queue_check_order_above(current_floor)){
+      return Software_state_moving_up;
+    }
+    else{ //if ((previous_direction == HARDWARE_MOVEMENT_DOWN) && queue_check_order_below(current_floor)){????
+      return Software_state_moving_down;
+    }
+}
+
+HARDWARE_MOVEMENT_UP
 

@@ -17,6 +17,10 @@ int timer_3_sec() {
 
       //printf("%.2f",time_difference);
       queue_update_new_order();
+
+      if (hardware_read_stop_signal()){
+        break;
+      }
     }
     return 1;
 }

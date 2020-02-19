@@ -12,6 +12,23 @@
  */
 
 void queue_update_new_order();
+
+
+
+
+
+/**
+ * @brief checks for orders in order matrix.
+ * 
+ * @return Floor where the order was given, -1 if no orders.
+ */
+
+int queue_check_orders_waiting();
+
+
+
+
+
 /**
  * @brief Clears all current orders and sets extinguishes all order lights.
  * 
@@ -29,9 +46,40 @@ void queue_clear_all_orders();
  * @warning changes @p p_matrix and dereferences value pointed to.
  */
 
+void queue_clear_order_on_floor(int floor);
 
 
-void queue_clear_order_on_floor(int *p_matrix, int floor);
+
+/**
+ * @brief Checks if there are orders to floors below the current floor.
+ * 
+ * @param Current_floor The floor the elevator is currently in.
+ * 
+ * 
+ * @return 1 of there are orders below, 0 if not.
+ * 
+ */
+
+int queue_check_order_below(int current_floor);
+
+
+
+/**
+ * @brief Checks if there are orders to floors above the current floor.
+ * 
+ * @param Current_floor The floor the elevator is currently in.
+ * 
+ * 
+ * @return 1 of there are orders above, 0 if not.
+ * 
+ */
+
+int queue_check_order_above(int current_floor);
+
+
+
+
+
 
 
 #endif

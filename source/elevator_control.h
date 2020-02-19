@@ -20,18 +20,15 @@ typedef enum {
 */
 int elevator_init();
 
-
-
-
-static void elevator_clear_all_order_lights()
-
 /**
- * @brief checks for orders in order matrix.
- * @param order_matrix matrix containing all order buttons.
- * @return loor where the order was given.
+ * @brief Clears all order lights.
+ * 
  */
 
-int elevator_check_orders_waiting(int order_matrix[4][3]);
+
+void elevator_clear_all_order_lights();
+
+
 
 /**
  * @brief Decides if the elevator should go up or down depending on what floor the order wants you to go to.
@@ -52,11 +49,11 @@ int elevator_at_floor();
 
 
 
-HardwareMovement elevator_stop_at_floor_for_moving_up(int current_floor,int order_button_matrix[4][3]);
+HardwareMovement elevator_movement_at_floor_for_moving_up(int current_floor,int order_button_matrix[4][3]);
 
 
 
-HardwareMovement elevator_stop_at_floor_for_moving_down(int current_floor,int order_button_matrix[4][3]);
+HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor,int order_button_matrix[4][3]);
 
 
 
