@@ -2,26 +2,13 @@
 #include "elevator_control.h"
 #include "queue.h"
 #include "timer.h"
-#include "global.h"
 
 
 
-
-
-static void clear_all_order_lights(){
-    HardwareOrder order_types[3] = {
-        HARDWARE_ORDER_UP,
-        HARDWARE_ORDER_INSIDE,
-        HARDWARE_ORDER_DOWN
-    };
-
-    for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
-        for(int i = 0; i < 3; i++){
-            HardwareOrder type = order_types[i];
-            hardware_command_order_light(f, type, 0);
-        }
-    }
-}
+//Global variables
+int current_floor;
+int previous_floor;
+Software_state current_state;
 
 
 
@@ -47,19 +34,19 @@ int main(){
 
   signal(SIGINT, sigint_handler);
 
-  current_floor = init_elevator();
+  current_floor = elevator_init();
   printf("current floor is: %d\n",current_floor+1 );
-  state = Software_state_waiting;
+ current_state= Software_state_waiting;
 
-  clear_all_order_lights();
+  elevator_clear_all_order_lights();
   
   while(1){
 
-    int *p_order_matrix = &order_button_matrix[0][0];
-        update_new_order(p_order_matrix);
+
+    queue_update_new_order();
 
     if (hardware_read_stop_signal()){
-        state = Software_state_stop;
+       current_state= Software_state_stop;
     }
 
 
@@ -68,9 +55,12 @@ int main(){
       case Software_state_waiting:
       ;
 
-        int order_floor = check_orders_wating(order_button_matrix);
+        int order_floor = elevator_check_orders_waiting(order_button_matrix);
         if(order_floor !=-1){
-          state = go_up_or_down(order_floor, current_floor);
+         current_state= elevator_go_up_or_down(order_floor, current_floor);
+        } else if(){
+
+          
         }
         //printf("wait");
         break;
@@ -78,7 +68,7 @@ int main(){
         ;
         printf("idle");
         int *p_clear_floor= &order_button_matrix[0][0];
-        clear_order_on_floor(p_clear_floor, current_floor);
+        queue_clear_order_on_floor(p_clear_floor, current_floor);
 
         break;
       case Software_state_moving_up:
@@ -117,8 +107,8 @@ int main(){
       case Software_state_stop:
         hardware_command_movement(HARDWARE_MOVEMENT_STOP);
         printf("stop");
-        int *p_clear_order= &order_button_matrix[0][0];
-        clear_all_orders(p_clear_order);
+
+        queue_clear_all_orders();
 
         while(hardware_read_stop_signal()){
           hardware_command_stop_light(1);
@@ -135,7 +125,7 @@ int main(){
           hardware_command_door_open(0);
         }
         printf("døren er lukket!");
-        state = Software_state_waiting;
+       current_state= Software_state_waiting;
         
 
         break;

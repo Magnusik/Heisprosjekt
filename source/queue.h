@@ -1,5 +1,5 @@
-#ifndef queue_h
-#define queue_h
+#ifndef QUEUE_H
+#define QUEUE_H
 #include "hardware.h"
 
 /**
@@ -11,7 +11,7 @@
  * @warning Changes @p order_button_matrix.
  */
 
-void update_new_order(int *p_matrix);
+void queue_update_new_order();
 /**
  * @brief Clears all current orders and sets extinguishes all order lights.
  * 
@@ -20,7 +20,7 @@ void update_new_order(int *p_matrix);
  * @warning Changes @p order_button_matrix.
  */
 
-void clear_all_orders(int *p_matrix);
+void queue_clear_all_orders();
 
 /**
  * @brief Clears all orders on given @p floor in the matrix  that pointer @p p_matrix points to.
@@ -31,7 +31,7 @@ void clear_all_orders(int *p_matrix);
 
 
 
-void clear_order_on_floor(int *p_matrix, int floor);
+void queue_clear_order_on_floor(int *p_matrix, int floor);
 
 
 #endif
