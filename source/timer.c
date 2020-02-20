@@ -3,6 +3,7 @@
 #include <unistd.h>
 #include "timer.h"
 #include "queue.h"
+#include "hardware.h"
 
 
 int timer_3_sec() {
@@ -10,7 +11,7 @@ int timer_3_sec() {
     time_t start_sec = time(NULL);
 
     float time_difference;
-    while(time_difference<3){
+    while(time_difference < 3){
 
       time_t end_sec = time(NULL);
       time_difference = difftime(end_sec,start_sec);

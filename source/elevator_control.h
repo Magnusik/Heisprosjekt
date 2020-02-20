@@ -47,9 +47,6 @@ Software_state elevator_go_up_or_down(int order_floor,int current_floor);
 
 int elevator_at_floor();
 
-HardwareMovement elevator_movement_at_floor_for_moving_up(int current_floor,int order_button_matrix[4][3]);
-
-HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor,int order_button_matrix[4][3]);
 
 Software_state elevator_movement_from_idle(int current_floor, HardwareMovement previous_direction);
 #endif
