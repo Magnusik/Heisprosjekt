@@ -1,9 +1,6 @@
 #include "hardware.h"
 #include "elevator_control.h"
-#include "queue.h"
 #include "timer.h"
-
-
 
 //Global variables
 int current_floor;
@@ -11,7 +8,6 @@ int previous_floor;
 int floor_up;
 int floor_down;
 Software_state current_state;
-
 
 
 static void sigint_handler(int sig){
@@ -54,11 +50,11 @@ int main(){
 
 
 
-    switch(state){
+    switch(current_state){
       case Software_state_waiting:
       ;
 
-        int order_floor = queue_check_orders_waiting(order_button_matrix);
+        int order_floor = queue_check_orders_waiting();
         if(order_floor !=-1 ){
             if(current_floor != -1){
                 current_state= elevator_go_up_or_down(order_floor, current_floor);
@@ -83,7 +79,7 @@ int main(){
         queue_clear_order_on_floor(elevator_at_floor());
         hardware_command_door_open(1);
         while(hardware_read_obstruction_signal()){
-            queue_update_new_order;
+            queue_update_new_order();
             if (hardware_read_stop_signal()){
                 current_state = Software_state_stop;
                 break;
@@ -104,7 +100,7 @@ int main(){
           //printf("%d",elevator_at_floor());
           floor_down = elevator_at_floor();
           floor_up = floor_down +1;
-          elevator_movement = elevator_movement_at_floor_for_moving_up(elevator_at_floor());
+          elevator_movement = elevator_movement_at_floor_for_moving_up(elevator_at_floor(),order_button_matrix);
           hardware_command_movement(elevator_movement);
           //printf("%d",elevator_movement);
         }
@@ -113,7 +109,7 @@ int main(){
 
         if(elevator_movement == HARDWARE_MOVEMENT_STOP){        
             previous_direction = HARDWARE_MOVEMENT_UP;
-            state = Software_state_idle;
+            current_state = Software_state_idle;
         }
         //printf("up");
 
@@ -125,7 +121,7 @@ int main(){
         if (elevator_at_floor()!=-1){
           floor_up = elevator_at_floor();
           floor_down = floor_up +1;
-          elevator_movement = elevator_movement_at_floor_for_moving_down(elevator_at_floor());
+          elevator_movement = elevator_movement_at_floor_for_moving_down(elevator_at_floor(),order_button_matrix);
           hardware_command_movement(elevator_movement);
           //printf("Current floor: %d",current_floor);
         }
@@ -133,7 +129,7 @@ int main(){
 
         if(elevator_movement == HARDWARE_MOVEMENT_STOP){        
             previous_direction = HARDWARE_MOVEMENT_DOWN;
-            state = Software_state_idle;
+            current_state = Software_state_idle;
         }
 
         printf("down");

@@ -4,8 +4,6 @@
 #include <stdio.h> 
 #include <unistd.h>
 
-
 int timer_3_sec();
 
 #endif
-

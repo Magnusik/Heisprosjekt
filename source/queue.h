@@ -1,7 +1,11 @@
 #ifndef QUEUE_H
 #define QUEUE_H
 #include "hardware.h"
-
+int order_button_matrix[HARDWARE_NUMBER_OF_FLOORS][HARDWARE_NUMBER_OF_ORDER_BUTTONS]={
+{0,0,0},
+{0,0,0},
+{0,0,0},
+{0,0,0}};
 /**
  * @file 
  * @brief Takes order from user and updates @p p_matrix and sets lights accordingly.
@@ -12,9 +16,6 @@
  */
 
 void queue_update_new_order();
-
-
-
 
 
 /**
@@ -75,12 +76,6 @@ int queue_check_order_below(int current_floor);
  */
 
 int queue_check_order_above(int current_floor);
-
-
-
-
-
-
 
 #endif
 

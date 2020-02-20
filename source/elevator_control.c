@@ -1,7 +1,5 @@
 #include "elevator_control.h"
 
-
-
 int elevator_init(){
   while(!(hardware_read_floor_sensor(0) || hardware_read_floor_sensor(1) || hardware_read_floor_sensor(2) || hardware_read_floor_sensor(3))){
     hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
@@ -15,9 +13,6 @@ int elevator_init(){
   }
   return -1;
 }
-
-
-
 
 void elevator_clear_all_order_lights(){
     HardwareOrder order_types[3] = {
@@ -34,12 +29,6 @@ void elevator_clear_all_order_lights(){
     }
 }
 
-
-
-
-
-
-
 Software_state elevator_go_up_or_down(int order_floor,int current_floor){
   if(order_floor > current_floor){
     return Software_state_moving_up;
@@ -52,9 +41,6 @@ Software_state elevator_go_up_or_down(int order_floor,int current_floor){
   }
 }
 
-
-
-
 int elevator_at_floor(){
 
   for (int floor = 0; floor<HARDWARE_NUMBER_OF_FLOORS; floor++){
@@ -65,10 +51,6 @@ int elevator_at_floor(){
   }
   return -1;
 }
-
-
-
-
 
 HardwareMovement elevator_movement_at_floor_for_moving_up(int current_floor, int order_button_matrix[4][3]){
 
@@ -115,11 +97,7 @@ HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor,in
   return HARDWARE_MOVEMENT_DOWN;
 }
 
-
-
 Software_state elevator_movement_from_idle(int current_floor, HardwareMovement previous_direction){
-
-
 
     if(queue_check_orders_waiting() == -1){
       return Software_state_waiting;
@@ -137,6 +115,3 @@ Software_state elevator_movement_from_idle(int current_floor, HardwareMovement p
       return Software_state_moving_down;
     }
 }
-
-HARDWARE_MOVEMENT_UP
-
