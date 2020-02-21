@@ -36,7 +36,9 @@ int main(){
   signal(SIGINT, sigint_handler);
 
   current_floor = elevator_init();
-  printf("current floor is: %d\n",current_floor+1 );
+  floor_up = current_floor + 1;
+  floor_down = current_floor;
+  printf("current floor is: %d\n",current_floor);
   current_state= Software_state_waiting;
 
   elevator_clear_all_order_lights();
@@ -56,27 +58,27 @@ int main(){
 
     switch(current_state){
       case Software_state_waiting:
-      //printf("wait");
-      ;
 
         if (elevator_at_floor() != -1){
           hardware_command_floor_indicator_on(elevator_at_floor());
         }
         current_floor = elevator_at_floor();
-
+        printf("WAIT %d",current_floor);//***************************************************************************
         int order_floor = queue_check_orders_waiting();
         if(order_floor !=-1 ){
             if(current_floor != -1){
-                printf("halla");
+                //printf("halla");
                 current_state= elevator_go_up_or_down(order_floor, current_floor);
             }
-            else{
+        else{
               
                 if(order_floor >= floor_up){
+                  printf("Up");
                   current_state = Software_state_moving_up;
                 }
                 else if(order_floor <= floor_down){
                   current_state = Software_state_moving_down;
+                  printf("Down");
                 }
             }
         } 
@@ -86,12 +88,12 @@ int main(){
         //printf("wait");
         break;
       case Software_state_idle:
-        ;
+        
         
         queue_clear_order_on_floor(elevator_at_floor());
         hardware_command_door_open(1);
         while(hardware_read_obstruction_signal()){
-            printf("WTF");
+            printf("OBSTRUCTION WTF");
             queue_update_new_order();
             if (hardware_read_stop_signal()){
                 current_state = Software_state_stop;
@@ -99,15 +101,12 @@ int main(){
             }
         }
         
-        
-        
         timer_3_sec();  ////////////////////////////////////////////// Hvis man trykker inn obstruction her påvirker det ikke systemet..........
                             ///////////////Hvis man er i første, trykker opp andre. Og trykker opp første før heisen er kommet til andre, vil den låse seg fast i 2. etasje.
         hardware_command_door_open(0);
         current_floor = elevator_at_floor();
-        printf("CURRENT FLOOR:  %d\n", current_floor);
+        //printf("CURRENT FLOOR:  %d\n", current_floor);
         current_state = elevator_movement_from_idle(current_floor, previous_direction);
-        printf("Current state:  %d", (int)current_state);
         break;
       case Software_state_moving_up:
         hardware_command_movement(HARDWARE_MOVEMENT_UP);
@@ -119,6 +118,7 @@ int main(){
           floor_down = elevator_at_floor();
           floor_up = floor_down +1;
           current_floor = elevator_at_floor();
+          printf("UP %d",current_floor);//***************************************************************************
           elevator_movement = queue_movement_at_floor_for_moving_up(current_floor);
           hardware_command_movement(elevator_movement);
           
@@ -144,6 +144,7 @@ int main(){
           floor_up = elevator_at_floor();
           floor_down = floor_up +1;
           current_floor = elevator_at_floor();
+          printf("DOWN %d",current_floor);//***************************************************************************
           elevator_movement = queue_movement_at_floor_for_moving_down(current_floor);
           hardware_command_movement(elevator_movement);
           
@@ -153,6 +154,7 @@ int main(){
 
         if(elevator_movement == HARDWARE_MOVEMENT_STOP){        
             previous_direction = HARDWARE_MOVEMENT_DOWN;
+            //printf("reeeee");
             current_state = Software_state_idle;
         }
 
@@ -184,10 +186,8 @@ int main(){
           hardware_command_door_open(0);
           
         }
-        printf("døren er lukket!");
+        //printf("døren er lukket!");
         current_state = Software_state_waiting;
-        
-
         break;
     }
   }

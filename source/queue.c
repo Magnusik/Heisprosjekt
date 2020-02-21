@@ -121,7 +121,7 @@ HardwareMovement queue_movement_at_floor_for_moving_down(int current_floor_is){
   for (int order_type  = 1; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS ; order_type++){
     if(order_button_matrix[current_floor_is][order_type]){
       return HARDWARE_MOVEMENT_STOP;
-      printf("skurt");
+      
     }
   }
 
@@ -132,7 +132,5 @@ HardwareMovement queue_movement_at_floor_for_moving_down(int current_floor_is){
       }
     }
   }
-  printf("ooooooooooooo");
-
   return HARDWARE_MOVEMENT_STOP;//////////////////////////////////////////////////////////////////////////
 }

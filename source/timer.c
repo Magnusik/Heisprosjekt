@@ -15,7 +15,7 @@ int timer_3_sec() {
 
       time_t end_sec = time(NULL);
       time_difference = difftime(end_sec,start_sec);
-
+      printf("\nIDLE\n");//***************************************************************************
       //printf("%.2f",time_difference);
       queue_update_new_order();
 

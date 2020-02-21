@@ -7,7 +7,7 @@ int elevator_init(){
   hardware_command_movement(HARDWARE_MOVEMENT_STOP);
   for (int floor = 0; floor<HARDWARE_NUMBER_OF_FLOORS; floor++){
     if (hardware_read_floor_sensor(floor)){
-      int current_floor=floor;
+      int current_floor=floor; 
       return current_floor;
     }
   }
