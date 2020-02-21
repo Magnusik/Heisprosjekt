@@ -29,11 +29,11 @@ void elevator_clear_all_order_lights(){
     }
 }
 
-Software_state elevator_go_up_or_down(int order_floor,int current_floor){
-  if(order_floor > current_floor){
+Software_state elevator_go_up_or_down(int order_floor_is,int current_floor_is){
+  if(order_floor_is > current_floor_is){
     return Software_state_moving_up;
 
-  }else if(order_floor < current_floor){
+  }else if(order_floor_is < current_floor_is){
     return Software_state_moving_down;
 
   }else {
@@ -42,11 +42,9 @@ Software_state elevator_go_up_or_down(int order_floor,int current_floor){
 }
 
 int elevator_at_floor(){
-
-  for (int floor = 0; floor<HARDWARE_NUMBER_OF_FLOORS; floor++){
+  for (int floor = 0; floor < HARDWARE_NUMBER_OF_FLOORS; floor++){
     if (hardware_read_floor_sensor(floor)){
-      int current_floor_is = floor;
-      return current_floor_is;
+      return floor;
     }
   }
   return -1;
