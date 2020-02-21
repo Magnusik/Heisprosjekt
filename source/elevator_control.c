@@ -65,13 +65,19 @@ Software_state elevator_movement_from_idle(int current_floor, HardwareMovement p
     else if((current_floor == 0) && queue_check_order_above(current_floor)){
       return Software_state_moving_up;
     } 
-    else if((previous_direction == HARDWARE_MOVEMENT_UP) && queue_check_order_above(current_floor)){
+    else if(((previous_direction == HARDWARE_MOVEMENT_UP) && queue_check_order_above(current_floor))){
       return Software_state_moving_up;
     }
     else if((previous_direction == HARDWARE_MOVEMENT_DOWN) && queue_check_order_below(current_floor)){
       return Software_state_moving_down;
     }
+    else if ((previous_direction == HARDWARE_MOVEMENT_UP) && queue_check_order_below(current_floor)){
+      return Software_state_moving_down;
+    }
+    else if ((previous_direction == HARDWARE_MOVEMENT_DOWN) && queue_check_order_above(current_floor)){
+      return Software_state_moving_up;
+    }
     else {
-      return Software_state_moving_up; /////////////////////////muligens feil.
+      return Software_state_waiting; /////////////////////////muligens feil.
     }
 }

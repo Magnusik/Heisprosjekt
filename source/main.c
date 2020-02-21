@@ -50,6 +50,7 @@ int main(){
     if (hardware_read_stop_signal()){
        current_state = Software_state_stop;
     }
+    
 
 
 
@@ -86,36 +87,39 @@ int main(){
         break;
       case Software_state_idle:
         ;
-        printf("idle0000000");
+        
         queue_clear_order_on_floor(elevator_at_floor());
         hardware_command_door_open(1);
         while(hardware_read_obstruction_signal()){
+            printf("WTF");
             queue_update_new_order();
             if (hardware_read_stop_signal()){
                 current_state = Software_state_stop;
                 break;
             }
         }
-        printf("idle111111");
-        //current_state = Software_state_idle;  muligens en bug, måtte ha denne for at if-setningen skulle bli sann.
-        //if (current_state == Software_state_idle){
-            timer_3_sec();  ////////////////////////////////////////////// Hvis man trykker inn obstruction her påvirker det ikke systemet..........
-        //{                     Hvis man er i første, trykker opp andre. Og trykker opp første før heisen er kommet til andre, vil den låse seg fast i 2. etasje.
+        
+        
+        
+        timer_3_sec();  ////////////////////////////////////////////// Hvis man trykker inn obstruction her påvirker det ikke systemet..........
+                            ///////////////Hvis man er i første, trykker opp andre. Og trykker opp første før heisen er kommet til andre, vil den låse seg fast i 2. etasje.
         hardware_command_door_open(0);
         current_floor = elevator_at_floor();
-
+        printf("CURRENT FLOOR:  %d\n", current_floor);
         current_state = elevator_movement_from_idle(current_floor, previous_direction);
-        printf("idle111111222222222222222");
+        printf("Current state:  %d", (int)current_state);
         break;
       case Software_state_moving_up:
         hardware_command_movement(HARDWARE_MOVEMENT_UP);
+        //printf("up");
     
         if (elevator_at_floor()!=-1){
           hardware_command_floor_indicator_on(elevator_at_floor());
           //printf("%d",elevator_at_floor());
           floor_down = elevator_at_floor();
           floor_up = floor_down +1;
-          elevator_movement = queue_movement_at_floor_for_moving_up(elevator_at_floor());
+          current_floor = elevator_at_floor();
+          elevator_movement = queue_movement_at_floor_for_moving_up(current_floor);
           hardware_command_movement(elevator_movement);
           
           //printf("%d",elevator_movement);
@@ -139,7 +143,8 @@ int main(){
           hardware_command_floor_indicator_on(elevator_at_floor());
           floor_up = elevator_at_floor();
           floor_down = floor_up +1;
-          elevator_movement = queue_movement_at_floor_for_moving_down(elevator_at_floor());
+          current_floor = elevator_at_floor();
+          elevator_movement = queue_movement_at_floor_for_moving_down(current_floor);
           hardware_command_movement(elevator_movement);
           
           //printf("Current floor: %d",current_floor);
