@@ -24,7 +24,7 @@ int main(){
   int order_floor;
   Software_state current_state;
   int enable_timer=1;
-  int a;
+  int transistion_stop_obstruction=0;
 
   HardwareMovement elevator_movement;
   HardwareMovement previous_direction;
@@ -165,21 +165,23 @@ int main(){
           }
         }
 
+        if (elevator_at_floor() ==-1){
+          current_state=Software_state_waiting; 
+          break;
+        }
+
         hardware_command_stop_light(0);
 
         if(hardware_read_obstruction_signal()){
           stop_timer();
-          a = 2;
+          transistion_stop_obstruction = 1;
 
         }
-        else if ((elevator_at_floor() != -1) && (a == 2)) {
+        else if ((elevator_at_floor() != -1) && (transistion_stop_obstruction == 1)) {
           start_timer();
-          a = 0;
+          transistion_stop_obstruction = 0;
         }
-
-        if (elevator_at_floor() == -1){
-          current_state = Software_state_waiting;
-        }
+        
         else if (has_timer_elapsed()){
           stop_timer();
           hardware_command_door_open(0);
