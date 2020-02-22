@@ -23,8 +23,8 @@ int main(){
   int floor_down;
   int order_floor;
   Software_state current_state;
-  int enable_timer=1;
-  int transistion_stop_obstruction=0;
+  int enable_timer = 1;
+  int transistion_stop_obstruction = 0;
 
   HardwareMovement elevator_movement;
   HardwareMovement previous_direction;
@@ -88,12 +88,12 @@ int main(){
 
       case Software_state_idle:
         printf("\n\nIDLE\n\n");
-        hardware_command_movement(elevator_movement);
+        hardware_command_movement(elevator_movement);    //Muligens bare ha stopp her? skaper forvirring med en variabel.
         queue_clear_order_on_floor(elevator_at_floor());
         hardware_command_door_open(1);
         if(enable_timer){
           start_timer();
-          enable_timer=0;
+          enable_timer = 0;
         }
 
         if (hardware_read_obstruction_signal()){
@@ -106,7 +106,7 @@ int main(){
           hardware_command_door_open(0);
           current_floor = elevator_at_floor();
           current_state = elevator_movement_from_idle(current_floor, previous_direction);
-          enable_timer=1;
+          enable_timer = 1;
         }
         break;
 //bug: 
@@ -169,8 +169,8 @@ int main(){
           else{
             enable_timer=1;
             current_state=Software_state_waiting;
-            break;
-          }
+            break;   // Vil ikke dette føre til at den hopper ut av while-løkken                      
+          }          // med en gang hvis man stopper mellom to etasjer?
         }
 
         hardware_command_stop_light(0);
@@ -189,7 +189,7 @@ int main(){
         else if (has_timer_elapsed()){
           stop_timer();
           hardware_command_door_open(0);
-          enable_timer=1;
+          enable_timer = 1;
           current_state = Software_state_waiting;
         }
 
