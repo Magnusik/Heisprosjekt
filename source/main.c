@@ -109,7 +109,8 @@ int main(){
           enable_timer=1;
         }
         break;
-
+//bug: 
+//opp til 4etg, flipp OBS aktiv når  dør er åpen, så trykk orde knapper, så trykk stop, så ordeknapper, så flipp OBS inaktiv. 
 
 
       case Software_state_moving_up:
@@ -165,21 +166,22 @@ int main(){
             hardware_command_door_open(1);
             start_timer();
           }
+          else{
+            enable_timer=1;
+            current_state=Software_state_waiting;
+            break;
+          }
         }
-        hardware_command_stop_light(0);
 
-        if (elevator_at_floor() ==-1){
-          current_state=Software_state_waiting; 
-          break;
-        }
+        hardware_command_stop_light(0);
 
         if(hardware_read_obstruction_signal()){
           printf("\n\nOBS_STOP\n\n");
-          stop_timer();
+          start_timer();
           transistion_stop_obstruction = 1;
 
         }
-        else if ((elevator_at_floor() != -1) && (transistion_stop_obstruction == 1)) {
+        else if (( (transistion_stop_obstruction == 1) && hardware_read_obstruction_signal()) || hardware_read_stop_signal()) {
           start_timer();
           transistion_stop_obstruction = 0;
         }
@@ -187,9 +189,9 @@ int main(){
         else if (has_timer_elapsed()){
           stop_timer();
           hardware_command_door_open(0);
+          enable_timer=1;
           current_state = Software_state_waiting;
         }
-
 
         break;
     }
@@ -197,6 +199,3 @@ int main(){
 
   return 0;
 }
-
-
-
