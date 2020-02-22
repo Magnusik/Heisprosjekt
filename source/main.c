@@ -24,6 +24,7 @@ int main(){
   int order_floor;
   Software_state current_state;
   int enable_timer=1;
+  int a;
 
   HardwareMovement elevator_movement;
   HardwareMovement previous_direction;
@@ -40,7 +41,6 @@ int main(){
   current_floor = elevator_init();
   floor_up = current_floor + 1;
   floor_down = current_floor;
-  printf("current floor is: %d\n",current_floor);
   current_state= Software_state_waiting;
 
   elevator_clear_all_order_lights();
@@ -60,7 +60,7 @@ int main(){
     switch(current_state){
       case Software_state_waiting:
 
-        print_matrix();
+        //print_matrix();
 
         if (elevator_at_floor() != -1){
           hardware_command_floor_indicator_on(elevator_at_floor());
@@ -89,7 +89,6 @@ int main(){
       case Software_state_idle:
 
         hardware_command_movement(elevator_movement);
-        printf("Elevator_movement: %d",(int)elevator_movement);
         queue_clear_order_on_floor(elevator_at_floor());
         hardware_command_door_open(1);
         if(enable_timer){
@@ -141,7 +140,6 @@ int main(){
           floor_up = elevator_at_floor();
           floor_down = floor_up - 1;
           current_floor = elevator_at_floor();
-          printf("moving down");
           elevator_movement = queue_movement_at_floor_for_moving_down(current_floor); //muligens feil her
 
 
@@ -150,32 +148,39 @@ int main(){
             current_state = Software_state_idle;
           }
         }
-        printf("MOVING DOWN");
         break;
 
 
 
       case Software_state_stop:
-        printf("\nSTOP\n");
         hardware_command_movement(elevator_movement);
-
-        queue_clear_all_orders();
         
         while(hardware_read_stop_signal()){
           hardware_command_stop_light(1);
+          queue_clear_all_orders();
 
           if (elevator_at_floor() != -1){
             hardware_command_door_open(1);
+            start_timer();
           }
-          start_timer();
-        }
-        hardware_command_stop_light(0);
-        
-        if((elevator_at_floor()!=-1) && hardware_read_obstruction_signal()){
-          start_timer();
         }
 
-        if (has_timer_elapsed()){
+        hardware_command_stop_light(0);
+
+        if(hardware_read_obstruction_signal()){
+          stop_timer();
+          a = 2;
+
+        }
+        else if ((elevator_at_floor() != -1) && (a == 2)) {
+          start_timer();
+          a = 0;
+        }
+
+        if (elevator_at_floor() == -1){
+          current_state = Software_state_waiting;
+        }
+        else if (has_timer_elapsed()){
           stop_timer();
           hardware_command_door_open(0);
           current_state = Software_state_waiting;

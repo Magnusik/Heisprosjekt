@@ -125,27 +125,23 @@ return HARDWARE_MOVEMENT_UP;////////////////////////////////////////////////////
 HardwareMovement queue_movement_at_floor_for_moving_down(int current_floor_is){
 
   if(current_floor_is == 0 ){
-    printf("Hvis det e her feil e, da...");
     return HARDWARE_MOVEMENT_STOP;
   }
 
   for (int order_type  = 1; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS ; order_type++){
     if(order_button_matrix[current_floor_is][order_type]){
-      printf("\nyp100\n");
       return HARDWARE_MOVEMENT_STOP;
       
     }
   }
 
   if (current_floor_is == 3){
-    printf("kafaen skjer kiz???");
     return HARDWARE_MOVEMENT_DOWN;
   }
 
   for (int f = 0; f < current_floor_is; f++){
     for(int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++){
       if (order_button_matrix[f][order_type]){
-        printf("\nyp\n");
         return HARDWARE_MOVEMENT_DOWN;
       }
     }
