@@ -59,7 +59,7 @@ int main(){
 
     switch(current_state){
       case Software_state_waiting:
-
+        printf("\n\nWAIT\n\n");
         //print_matrix();
 
         if (elevator_at_floor() != -1){
@@ -87,7 +87,7 @@ int main(){
 
 
       case Software_state_idle:
-
+        printf("\n\nIDLE\n\n");
         hardware_command_movement(elevator_movement);
         queue_clear_order_on_floor(elevator_at_floor());
         hardware_command_door_open(1);
@@ -97,6 +97,7 @@ int main(){
         }
 
         if (hardware_read_obstruction_signal()){
+          printf("\n\nOBS_IDLE\n\n");
           start_timer();
         }
 
@@ -154,6 +155,7 @@ int main(){
 
       case Software_state_stop:
         hardware_command_movement(elevator_movement);
+        printf("\n\nSTOP\n\n");
         
         while(hardware_read_stop_signal()){
           hardware_command_stop_light(1);
@@ -164,15 +166,15 @@ int main(){
             start_timer();
           }
         }
+        hardware_command_stop_light(0);
 
         if (elevator_at_floor() ==-1){
           current_state=Software_state_waiting; 
           break;
         }
 
-        hardware_command_stop_light(0);
-
         if(hardware_read_obstruction_signal()){
+          printf("\n\nOBS_STOP\n\n");
           stop_timer();
           transistion_stop_obstruction = 1;
 
