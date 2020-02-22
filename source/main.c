@@ -22,8 +22,8 @@ int main(){
   int floor_up;
   int floor_down;
   int order_floor;
-  int first_time_idle = 1;
   Software_state current_state;
+  int enable_timer=1;
 
   HardwareMovement elevator_movement;
   HardwareMovement previous_direction;
@@ -91,11 +91,10 @@ int main(){
         hardware_command_movement(elevator_movement);
         printf("Elevator_movement: %d",(int)elevator_movement);
         queue_clear_order_on_floor(elevator_at_floor());
-        
         hardware_command_door_open(1);
-        if(first_time_idle){
+        if(enable_timer){
           start_timer();
-          first_time_idle = 0;
+          enable_timer=0;
         }
 
         if (hardware_read_obstruction_signal()){
@@ -106,7 +105,8 @@ int main(){
           stop_timer();
           hardware_command_door_open(0);
           current_floor = elevator_at_floor();
-          current_state = elevator_movement_from_idle(current_floor, previous_direction); //Muligens feil
+          current_state = elevator_movement_from_idle(current_floor, previous_direction);
+          enable_timer=1;
         }
         break;
 
@@ -124,7 +124,6 @@ int main(){
 
           if(elevator_movement == HARDWARE_MOVEMENT_STOP){        
             previous_direction = HARDWARE_MOVEMENT_UP;
-            first_time_idle = 1;
             current_state = Software_state_idle;
           }
         }
@@ -148,7 +147,6 @@ int main(){
 
           if(elevator_movement == HARDWARE_MOVEMENT_STOP){        
             previous_direction = HARDWARE_MOVEMENT_DOWN;
-            first_time_idle = 1;
             current_state = Software_state_idle;
           }
         }
@@ -173,7 +171,7 @@ int main(){
         }
         hardware_command_stop_light(0);
         
-        if(elevator_at_floor() && hardware_read_obstruction_signal()){
+        if((elevator_at_floor()!=-1) && hardware_read_obstruction_signal()){
           start_timer();
         }
 
