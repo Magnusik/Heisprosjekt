@@ -22,6 +22,7 @@ int main(){
   int floor_up;
   int floor_down;
   int order_floor;
+  int first_time_idle = 1;
   Software_state current_state;
 
   HardwareMovement elevator_movement;
@@ -51,7 +52,8 @@ int main(){
     queue_update_new_order();
 
     if (hardware_read_stop_signal()){
-       current_state = Software_state_stop;
+        elevator_movement = HARDWARE_MOVEMENT_STOP;
+        current_state = Software_state_stop;
     }
     
 
@@ -85,26 +87,27 @@ int main(){
 
 
       case Software_state_idle:
+
         hardware_command_movement(elevator_movement);
         printf("Elevator_movement: %d",(int)elevator_movement);
         queue_clear_order_on_floor(elevator_at_floor());
+        
         hardware_command_door_open(1);
-
-        while(hardware_read_obstruction_signal()){
-            printf("OBSTRUCTION WTF");
-            queue_update_new_order();
-            if (hardware_read_stop_signal()){
-                current_state = Software_state_stop;
-                break;
-            }
+        if(first_time_idle){
+          start_timer();
+          first_time_idle = 0;
         }
 
+        if (hardware_read_obstruction_signal()){
+          start_timer();
+        }
 
-        timer_3_sec();  ////////////////////////////////////////////// Hvis man trykker inn obstruction her påvirker det ikke systemet..........
-                            ///////////////Hvis man er i første, trykker opp andre. Og trykker opp første før heisen er kommet til andre, vil den låse seg fast i 2. etasje.
-        hardware_command_door_open(0);
-        current_floor = elevator_at_floor();
-        current_state = elevator_movement_from_idle(current_floor, previous_direction); //Muligens feil
+        if(has_timer_elapsed()){
+          stop_timer();
+          hardware_command_door_open(0);
+          current_floor = elevator_at_floor();
+          current_state = elevator_movement_from_idle(current_floor, previous_direction); //Muligens feil
+        }
         break;
 
 
@@ -121,6 +124,7 @@ int main(){
 
           if(elevator_movement == HARDWARE_MOVEMENT_STOP){        
             previous_direction = HARDWARE_MOVEMENT_UP;
+            first_time_idle = 1;
             current_state = Software_state_idle;
           }
         }
@@ -144,6 +148,7 @@ int main(){
 
           if(elevator_movement == HARDWARE_MOVEMENT_STOP){        
             previous_direction = HARDWARE_MOVEMENT_DOWN;
+            first_time_idle = 1;
             current_state = Software_state_idle;
           }
         }
@@ -154,7 +159,7 @@ int main(){
 
       case Software_state_stop:
         printf("\nSTOP\n");
-        hardware_command_movement(HARDWARE_MOVEMENT_STOP);
+        hardware_command_movement(elevator_movement);
 
         queue_clear_all_orders();
         
@@ -164,20 +169,21 @@ int main(){
           if (elevator_at_floor() != -1){
             hardware_command_door_open(1);
           }
-
+          start_timer();
         }
         hardware_command_stop_light(0);
-        if (elevator_at_floor() != -1){
-
-          while(hardware_read_obstruction_signal()){
-            queue_update_new_order();
-          }
-          timer_3_sec();
-          hardware_command_door_open(0);
-          
+        
+        if(elevator_at_floor() && hardware_read_obstruction_signal()){
+          start_timer();
         }
-        //printf("døren er lukket!");
-        current_state = Software_state_waiting;
+
+        if (has_timer_elapsed()){
+          stop_timer();
+          hardware_command_door_open(0);
+          current_state = Software_state_waiting;
+        }
+
+
         break;
     }
   }
@@ -187,12 +193,3 @@ int main(){
 
 
 
-
-// while(hardware_read_obstruction_signal()){
-
-//   while(hardware_read_obstruction_signal()){
-//     queue_update_new_order();
-
-//   }
-//   timer_3_sec();
-// }

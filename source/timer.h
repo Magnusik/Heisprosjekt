@@ -4,6 +4,14 @@
 #include <stdio.h> 
 #include <unistd.h>
 
-int timer_3_sec();
+int timerActive;
+time_t timestamp;
 
+void start_timer();
+
+int has_timer_elapsed();
+
+void stop_timer();
+
+int is_timer_active();
 #endif

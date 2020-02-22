@@ -25,6 +25,9 @@ void queue_update_new_order() {
 
 
 
+
+
+
 int queue_check_orders_waiting(){
 
   for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
