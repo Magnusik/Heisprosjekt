@@ -9,23 +9,23 @@
 
 
 
-int timerActive = 0;
+int timer_active = 0;
 
 void start_timer(){
-  timerActive = 1;
-  timestamp  = time(NULL);
+  timer_active = 1;
+  time_stamp  = time(NULL);
 }
 
 int has_timer_elapsed(){
-  return(timerActive && ((time(NULL) - timestamp) > 3));
+  return(timer_active && ((time(NULL) - time_stamp) > 3));
 }
 
 void stop_timer(){
-  timerActive = 0;
+  timer_active = 0;
 }
 
 int is_timer_active(){
-  return timerActive;
+  return timer_active;
 }
 
 
