@@ -19,19 +19,18 @@ time_t time_stamp;
 /**
  * @brief Starts timer.  
  */
-void start_timer();
+void timer_start();
 
 /**
- * @brief Checks if 3 seconds have passed since start_timer() were last called.
+ * @brief Checks if 3 seconds have passed since timer_start() were last called.
  * 
  * @return 1 if 3 seconds have passed, 0 if not.
  */
-int has_timer_elapsed();
+int timer_has_elapsed();
 
 /**
  * @brief Stops timer.
  */
-void stop_timer();
+void timer_stop();
 
-int is_timer_active(); //Muligens fjerne?
 #endif

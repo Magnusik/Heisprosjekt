@@ -11,16 +11,16 @@
 
 int timer_active = 0;
 
-void start_timer(){
+void timer_start(){
   timer_active = 1;
   time_stamp  = time(NULL);
 }
 
-int has_timer_elapsed(){
+int timer_has_elapsed(){
   return(timer_active && ((time(NULL) - time_stamp) > 3));
 }
 
-void stop_timer(){
+void timer_stop(){
   timer_active = 0;
 }
 

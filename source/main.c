@@ -96,17 +96,17 @@ int main(){
         queue_clear_order_on_floor(elevator_at_floor());
         hardware_command_door_open(1);
         if(enable_timer){
-          start_timer();
+          timer_start();
           enable_timer = 0;
         }
 
         if (hardware_read_obstruction_signal()){
           //printf("\n\nOBS_IDLE\n\n");
-          start_timer();
+          timer_start();
         }
 
-        if(has_timer_elapsed()){
-          stop_timer();
+        if(timer_has_elapsed()){
+          timer_stop();
           hardware_command_door_open(0);
           current_floor = elevator_at_floor();
           current_state = elevator_movement_from_idle(current_floor, previous_direction);
@@ -168,7 +168,7 @@ int main(){
 
           if (elevator_at_floor() != -1){
             hardware_command_door_open(1);
-            start_timer();
+            timer_start();
           }
           else{
             enable_timer = 1;
@@ -182,17 +182,17 @@ int main(){
         if(hardware_read_obstruction_signal()){
           queue_clear_order_on_floor(elevator_at_floor()); // La til
           //printf("\n\nOBS_STOP\n\n");
-          start_timer();
+          timer_start();
           transistion_stop_obstruction = 1;
 
         }
         else if (( (transistion_stop_obstruction == 1) && hardware_read_obstruction_signal()) || hardware_read_stop_signal()) {
-          start_timer();
+          timer_start();
           transistion_stop_obstruction = 0;
         }
         
-        else if (has_timer_elapsed()){
-          stop_timer();
+        else if (timer_has_elapsed()){
+          timer_stop();
           hardware_command_door_open(0);
           enable_timer = 1;
           current_state = Software_state_waiting;
