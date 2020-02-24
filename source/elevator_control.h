@@ -49,8 +49,6 @@ Software_state elevator_go_up_or_down(int order_floor,int current_floor);
  */
 int elevator_at_floor();
 
-
-
 /**
  * @brief Calculates which state the elevator should enter from the state idle.
  * 
