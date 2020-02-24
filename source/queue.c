@@ -4,7 +4,7 @@
 #include <signal.h>
 
 
-int order_button_matrix[HARDWARE_NUMBER_OF_FLOORS][HARDWARE_NUMBER_OF_ORDER_BUTTONS]={
+static int order_button_matrix[HARDWARE_NUMBER_OF_FLOORS][HARDWARE_NUMBER_OF_ORDER_BUTTONS]={
 {0,0,0},
 {0,0,0},
 {0,0,0},

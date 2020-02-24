@@ -59,7 +59,7 @@ int main(){
 
     switch(current_state){
       case Software_state_waiting:
-        printf("\n\nWAIT\n\n");
+        //printf("\n\nWAIT\n\n");
         //print_matrix();
 
         if (elevator_at_floor() != -1){
@@ -68,6 +68,10 @@ int main(){
 
         current_floor = elevator_at_floor();  ////////////////////////// mulig kilde
         order_floor = queue_check_orders_waiting();
+
+        printf("Order floor: %d\n\n",order_floor);
+        printf("floor up: %d\n", floor_up);
+        //printf("Current floor: %d\n", current_floor);
 
 
         if((order_floor !=-1) && (current_floor != -1)){
@@ -97,7 +101,7 @@ int main(){
         }
 
         if (hardware_read_obstruction_signal()){
-          printf("\n\nOBS_IDLE\n\n");
+          //printf("\n\nOBS_IDLE\n\n");
           start_timer();
         }
 
@@ -115,11 +119,11 @@ int main(){
 
       case Software_state_moving_up:
         hardware_command_movement(HARDWARE_MOVEMENT_UP);
-    
-        if (elevator_at_floor() != -1){               //Hvis heisen er i en etasje, vil den gå inn i if-setningen.
+        int temp;
+        if (( temp = elevator_at_floor()) != -1){
+          floor_down = temp;   
+          floor_up =  floor_down + 1; //Hvis heisen er i en etasje, vil den gå inn i if-setningen.
           hardware_command_floor_indicator_on(elevator_at_floor());
-          floor_down = elevator_at_floor();
-          floor_up = floor_down +1;
           current_floor = elevator_at_floor();
           elevator_movement = queue_movement_at_floor_for_moving_up(current_floor); // Kanskje feil.
 
@@ -136,11 +140,11 @@ int main(){
 
       case Software_state_moving_down:
         hardware_command_movement(HARDWARE_MOVEMENT_DOWN);
-
-        if (elevator_at_floor()!=-1){
-          hardware_command_floor_indicator_on(elevator_at_floor());
-          floor_up = elevator_at_floor();
+        int temp2;
+        if ((temp2 = elevator_at_floor())!=-1){
+          floor_up = temp2;
           floor_down = floor_up - 1;
+          hardware_command_floor_indicator_on(elevator_at_floor());
           current_floor = elevator_at_floor();
           elevator_movement = queue_movement_at_floor_for_moving_down(current_floor); //muligens feil her
 
@@ -156,7 +160,7 @@ int main(){
 
       case Software_state_stop:
         hardware_command_movement(elevator_movement);
-        printf("\n\nSTOP\n\n");
+        //printf("\n\nSTOP\n\n");
         
         while(hardware_read_stop_signal()){
           hardware_command_stop_light(1);
@@ -167,8 +171,8 @@ int main(){
             start_timer();
           }
           else{
-            enable_timer=1;
-            current_state=Software_state_waiting;
+            enable_timer = 1;
+            current_state = Software_state_waiting;
             break;   // Vil ikke dette føre til at den hopper ut av while-løkken                      
           }          // med en gang hvis man stopper mellom to etasjer?
         }
@@ -176,7 +180,8 @@ int main(){
         hardware_command_stop_light(0);
 
         if(hardware_read_obstruction_signal()){
-          printf("\n\nOBS_STOP\n\n");
+          queue_clear_order_on_floor(elevator_at_floor()); // La til
+          //printf("\n\nOBS_STOP\n\n");
           start_timer();
           transistion_stop_obstruction = 1;
 

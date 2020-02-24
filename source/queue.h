@@ -2,12 +2,7 @@
 #define QUEUE_H
 #include "hardware.h"
 
-/**
- * @file
- * @brief A matrix containing 12 elements which represents the different order-button-types.
- * An element is 1 if an order is active, and 0 if an order is inactive.
- */
-int order_button_matrix[HARDWARE_NUMBER_OF_FLOORS][HARDWARE_NUMBER_OF_ORDER_BUTTONS];
+
 
 /**
  * @brief Read order from user and updates @p order_button_matrix and sets lights accordingly.
@@ -18,6 +13,7 @@ void queue_update_new_order();
 
 
 /**
+ * @file
  * @brief Checks for orders in @p order_button_matrix.
  * 
  * @return Floor where the order was given, -1 if no orders.
