@@ -10,6 +10,14 @@
 void queue_add_order(int floor, int order_type);
 
 
+
+
+/**
+ * Lagt til fra refactoring
+ */
+void queue_remove_order(int floor, int order_type);
+
+
 /**
  * Lagt til fra refactoring
  */
@@ -26,13 +34,6 @@ int queue_check_order(int floor, int order_type);
 int queue_check_orders_waiting();
 
 
-
-/**
- * @brief Clears all current orders and extinguishes all order lights.
- * 
- * @warning Sets all elements in @p order_button_matrix to 0.
- */
-void queue_clear_all_orders();
 
 /**
  * @brief Clears all orders on given @p floor in the @p order_button_matrix and extinguishes lights accordingly.

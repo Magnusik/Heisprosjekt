@@ -15,6 +15,10 @@ void queue_add_order(int floor, int order_type){
     order_button_matrix[floor][order_type] = 1;
 }
 
+void queue_remove_order(int floor, int order_type){
+    order_button_matrix[floor][order_type] = 0;
+}
+
 int queue_check_order(int floor, int order_type){
     return order_button_matrix[floor][order_type];
 }
@@ -35,20 +39,8 @@ int queue_check_orders_waiting(){
 
 
 
-void queue_clear_all_orders(){
-    for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
-        for (int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++ ){
-            order_button_matrix[f][order_type] = 0;
-            hardware_command_order_light(f,order_type,0);
-        }
-    }
-}
-
-
-
-
 void queue_clear_order_on_floor(int floor){
-    for (int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++ ){
+    for (int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++ ){   ////////////////////////////////
         order_button_matrix[floor][order_type] = 0;
         hardware_command_order_light(floor,order_type,0);
     }

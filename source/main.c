@@ -164,7 +164,7 @@ int main(){
         
         while(hardware_read_stop_signal()){
           hardware_command_stop_light(1);
-          queue_clear_all_orders();
+          elevator_clear_all_orders();
 
           if (elevator_at_floor() != -1){
             hardware_command_door_open(1);
