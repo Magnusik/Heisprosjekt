@@ -49,7 +49,7 @@ int main(){
   while(1){
 
     elevator_update_orders();
-    elevator_update_order_lights();
+
 
     if (hardware_read_stop_signal()){
         elevator_movement = HARDWARE_MOVEMENT_STOP;

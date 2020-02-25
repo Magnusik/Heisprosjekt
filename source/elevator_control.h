@@ -43,14 +43,6 @@ void elevator_update_orders();
 
 
 /**
- * Lagt til fra refactoring
- * 
- */
-
-void elevator_update_order_lights();
-
-
-/**
  * @brief Decides if the elevator should go up or down depending on what floor the order wants you to go to.
  * @param order_floor Floor to go to. 
  * @param current_floor The floor the elevator is currently in.
