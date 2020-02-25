@@ -58,7 +58,7 @@ void elevator_clear_orders_on_floor(int floor){
 }
 
 
-Software_state elevator_go_up_or_down(int order_floor_is,int current_floor_is){
+Software_state elevator_movement_from_floor(int order_floor_is,int current_floor_is){
   if(order_floor_is > current_floor_is){
     return Software_state_moving_up;
 
@@ -175,5 +175,17 @@ HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor_is
     return HARDWARE_MOVEMENT_STOP;
   }
   return HARDWARE_MOVEMENT_DOWN;
+}
+
+
+
+
+Software_state elevator_movement_from_undef_floor(int order_floor, int floor_up){
+    if(order_floor >= floor_up){
+        return Software_state_moving_up;
+    }
+    else {
+        return Software_state_moving_down;
+    }
 }
 

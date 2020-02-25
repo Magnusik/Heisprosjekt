@@ -65,7 +65,7 @@ void elevator_clear_orders_on_floor(int floor);
  * @param current_floor The floor the elevator is currently in.
  * @return state
  */
-Software_state elevator_go_up_or_down(int order_floor,int current_floor);
+Software_state elevator_movement_from_floor(int order_floor,int current_floor);
 
 /**
  * @brief Checks if the elevator is at or passing by a defined floor.
@@ -100,6 +100,6 @@ HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor_is
 
 
 
-
+Software_state elevator_movement_from_undef_floor(int order_floor, int floor_up);
 
 #endif
