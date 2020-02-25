@@ -6,6 +6,9 @@
 #include "hardware.h"
 #include "queue.h"
 
+#define OPEN 1
+#define CLOSE 0
+
 
 /**
  * @file 

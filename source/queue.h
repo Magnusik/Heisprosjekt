@@ -2,6 +2,13 @@
 #define QUEUE_H
 #include "hardware.h"
 
+#define ORDER_UP 0
+#define ORDER_INSIDE 1
+#define ORDER_DOWN 2
+
+
+#define NO_ORDERS -1
+
 
 
 /**

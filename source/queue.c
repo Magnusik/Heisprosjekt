@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <signal.h>
 
-
 static int order_button_matrix[HARDWARE_NUMBER_OF_FLOORS][HARDWARE_NUMBER_OF_ORDER_BUTTONS]={
 {0,0,0},
 {0,0,0},
@@ -22,7 +21,6 @@ void queue_remove_order(int floor, int order_type){
 int queue_check_order(int floor, int order_type){
     return order_button_matrix[floor][order_type];
 }
-
 
 
 int queue_check_orders_waiting(){

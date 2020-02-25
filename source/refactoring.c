@@ -181,6 +181,15 @@ HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor_is
 
 
 
+Software_state elevator_movement_from_undef_floor(int order_floor, int floor_up, int floor_down){
+    if(order_floor >= floor_up){
+        return Software_state_moving_up;
+    }
+    else {
+        return Software_state_moving_down;
+    }
+}
+
 
 
 

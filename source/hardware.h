@@ -11,6 +11,10 @@
 #define HARDWARE_H
 #define HARDWARE_NUMBER_OF_FLOORS 4
 #define HARDWARE_NUMBER_OF_ORDER_BUTTONS 3
+#define ON 1
+#define OFF 0
+#define NOT_IN_FLOOR -1
+
 
 /**
  * @brief Movement type used in @c hardware_command_movement.
@@ -30,6 +34,7 @@ typedef enum {
     HARDWARE_ORDER_INSIDE,
     HARDWARE_ORDER_DOWN
 } HardwareOrder;
+
 
 /**
  * @brief Initializes the elevator control hardware.
