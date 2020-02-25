@@ -41,15 +41,15 @@ int main(){
   current_floor = elevator_init();
   floor_up = current_floor + 1;
   floor_down = current_floor;
-  current_state= Software_state_waiting;
+  current_state = Software_state_waiting;
 
   elevator_clear_all_order_lights();
   hardware_command_door_open(0);
   
   while(1){
 
-
-    queue_update_new_order();
+    elevator_update_orders();
+    elevator_update_order_lights();
 
     if (hardware_read_stop_signal()){
         elevator_movement = HARDWARE_MOVEMENT_STOP;

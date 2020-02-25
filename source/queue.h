@@ -5,11 +5,16 @@
 
 
 /**
- * @brief Read order from user and updates @p order_button_matrix and sets lights accordingly.
- * 
- * @warning Changes @p order_button_matrix.
+ * Lagt til fra refactoring
  */
-void queue_update_new_order();
+void queue_add_order(int floor, int order_type);
+
+
+/**
+ * Lagt til fra refactoring
+ */
+int queue_check_order(int floor, int order_type);
+
 
 
 /**
