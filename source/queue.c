@@ -38,22 +38,12 @@ int queue_check_orders_waiting(){
 }
 
 
-
-void queue_clear_order_on_floor(int floor){
-    for (int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++ ){   ////////////////////////////////
-        order_button_matrix[floor][order_type] = 0;
-        hardware_command_order_light(floor,order_type,0);
-    }
-}
-
-
-
 int queue_check_order_below(int current_floor){
     if(current_floor == 0){
         return 0;
     }
     for (int f = 0; f < current_floor; f++){
-        for (int order_type = 0; order_type <HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type ++){
+        for (int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type ++){
             if(order_button_matrix[f][order_type]){
                 return 1;
             }

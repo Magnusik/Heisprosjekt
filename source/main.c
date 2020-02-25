@@ -93,7 +93,7 @@ int main(){
       case Software_state_idle:
         printf("\n\nIDLE\n\n");
         hardware_command_movement(elevator_movement);    //Muligens bare ha stopp her? skaper forvirring med en variabel.
-        queue_clear_order_on_floor(elevator_at_floor());
+        elevator_clear_orders_on_floor(elevator_at_floor());
         hardware_command_door_open(1);
         if(enable_timer){
           timer_start();
@@ -180,8 +180,7 @@ int main(){
         hardware_command_stop_light(0);
 
         if(hardware_read_obstruction_signal()){
-          queue_clear_order_on_floor(elevator_at_floor()); // La til
-          //printf("\n\nOBS_STOP\n\n");
+          elevator_clear_orders_on_floor(elevator_at_floor());
           timer_start();
           transistion_stop_obstruction = 1;
 

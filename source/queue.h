@@ -35,16 +35,6 @@ int queue_check_orders_waiting();
 
 
 
-/**
- * @brief Clears all orders on given @p floor in the @p order_button_matrix and extinguishes lights accordingly.
- * 
- * @param floor The floor that the orders should be cleared in.
- * 
- * @warning changes @p order_button_matrix.
- */
-void queue_clear_order_on_floor(int floor);
-
-
 
 /**
  * @brief Checks if there are orders to floors below the current floor.

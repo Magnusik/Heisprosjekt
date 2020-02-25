@@ -54,6 +54,14 @@ void elevator_clear_all_orders(){
 }
 
 
+void elevator_clear_orders_on_floor(int floor){
+    for (int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++){
+        queue_remove_order(floor, order_type);
+        hardware_command_order_light(floor, order_type, 0);
+    }
+}
+
+
 
 Software_state elevator_go_up_or_down(int order_floor_is,int current_floor_is){
   if(order_floor_is > current_floor_is){
