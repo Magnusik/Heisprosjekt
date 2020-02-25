@@ -113,3 +113,72 @@ Software_state elevator_movement_from_idle(int current_floor, HardwareMovement p
       return Software_state_waiting; /////////////////////////muligens feil.
     }
 }
+
+
+
+
+HardwareMovement elevator_movement_at_floor_for_moving_up(int current_floor_is){
+
+  if(current_floor_is == (HARDWARE_NUMBER_OF_FLOORS -1)){
+    return HARDWARE_MOVEMENT_STOP;
+  }
+
+  for (int order_type = 0; order_type < (HARDWARE_NUMBER_OF_ORDER_BUTTONS -1); order_type++){
+    if(queue_check_order(current_floor_is, order_type)){
+      return HARDWARE_MOVEMENT_STOP;
+    }
+  }
+
+  for(int f = (current_floor_is + 1); f < HARDWARE_NUMBER_OF_FLOORS; f++ ){
+    for (int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++){
+      if (queue_check_order(f, order_type)){
+        return HARDWARE_MOVEMENT_UP;
+      }
+    }
+  }
+  if (queue_check_order(current_floor_is, 2)){
+    return HARDWARE_MOVEMENT_STOP;
+  }
+
+    if (current_floor_is == 0){
+    return HARDWARE_MOVEMENT_UP;
+  }
+
+return HARDWARE_MOVEMENT_UP;
+}
+
+
+
+
+
+HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor_is){
+
+  if(current_floor_is == 0 ){
+    return HARDWARE_MOVEMENT_STOP;
+  }
+
+  for (int order_type  = 1; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS ; order_type++){
+    if(queue_check_order(current_floor_is, order_type)){    
+      return HARDWARE_MOVEMENT_STOP;
+      
+    }
+  }
+
+  if (current_floor_is == 3){
+    return HARDWARE_MOVEMENT_DOWN;
+  }
+
+  for (int f = 0; f < current_floor_is; f++){
+    for(int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++){
+      if (queue_check_order(f, order_type)){ 
+        return HARDWARE_MOVEMENT_DOWN;
+      }
+    }
+  }
+
+  if (queue_check_order(current_floor_is, 0)){ 
+    return HARDWARE_MOVEMENT_STOP;
+  }
+  return HARDWARE_MOVEMENT_DOWN;
+}
+

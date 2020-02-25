@@ -125,7 +125,7 @@ int main(){
           floor_up =  floor_down + 1; //Hvis heisen er i en etasje, vil den gå inn i if-setningen.
           hardware_command_floor_indicator_on(elevator_at_floor());
           current_floor = elevator_at_floor();
-          elevator_movement = queue_movement_at_floor_for_moving_up(current_floor); // Kanskje feil.
+          elevator_movement = elevator_movement_at_floor_for_moving_up(current_floor); // Kanskje feil.
 
           if(elevator_movement == HARDWARE_MOVEMENT_STOP){        
             previous_direction = HARDWARE_MOVEMENT_UP;
@@ -146,7 +146,7 @@ int main(){
           floor_down = floor_up - 1;
           hardware_command_floor_indicator_on(elevator_at_floor());
           current_floor = elevator_at_floor();
-          elevator_movement = queue_movement_at_floor_for_moving_down(current_floor); //muligens feil her
+          elevator_movement = elevator_movement_at_floor_for_moving_down(current_floor); //muligens feil her
 
 
           if(elevator_movement == HARDWARE_MOVEMENT_STOP){        

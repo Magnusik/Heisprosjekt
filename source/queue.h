@@ -58,9 +58,7 @@ int queue_check_order_above(int current_floor);
 
 
 
-HardwareMovement queue_movement_at_floor_for_moving_up(int current_floor_is);
 
-HardwareMovement queue_movement_at_floor_for_moving_down(int current_floor_is);
 
 
 void print_matrix();

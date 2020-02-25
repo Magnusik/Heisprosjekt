@@ -81,4 +81,22 @@ int elevator_at_floor();
  * @return The state the elevator should enter next.
  */
 Software_state elevator_movement_from_idle(int current_floor, HardwareMovement previous_direction);
+
+
+
+
+
+
+HardwareMovement elevator_movement_at_floor_for_moving_up(int current_floor_is);
+
+
+
+
+
+HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor_is);
+
+
+
+
+
 #endif
