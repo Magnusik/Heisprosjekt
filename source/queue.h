@@ -1,18 +1,24 @@
+/**
+ * @file
+ * @brief Queue module.
+ * 
+ * Functions for checking and modifying the queue.
+ */
+
 #ifndef QUEUE_H
 #define QUEUE_H
-#include "hardware.h"
 
 #define ORDER_UP 0
 #define ORDER_INSIDE 1
 #define ORDER_DOWN 2
-
-
 #define NO_ORDERS -1
+#define HARDWARE_NUMBER_OF_ORDER_BUTTONS 3
+#define HARDWARE_NUMBER_OF_FLOORS 4
+
 
 
 
 /**
- * @file
  * @brief Adds order to queue.
  * 
  * @param floor Floor the order was given to.

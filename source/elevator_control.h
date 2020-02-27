@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @brief Elevator control module.
+ * 
+ * Functions for deciding the behavior of the elevator system.
+ */
+
 #ifndef elevator_control_h
 #define elevator_control_h
 #include <stdio.h>
@@ -10,8 +17,7 @@
 #define CLOSE 0
 
 
-/**
- * @file 
+/** 
  * @brief The states which the elevator can possibly be in, after initializing.
  */
 
@@ -24,6 +30,7 @@ typedef enum {
 }Software_state;
 
 
+
 /**
  * @brief Which orders should be prioritised in @c elevator_movement_from_idle.
  */
@@ -34,12 +41,25 @@ typedef enum {
 } Order_priority;
 
 
+
+/**
+ * @brief Checks if the elevator is at a defined floor or passing by a defined floor.
+ * 
+ * @return 0 if 1.st floor, 1 if 2.nd , 2 if 3.rd and 3 if 4.th.
+ * -1 if the elevator finds itself between floors.
+ */
+int elevator_at_floor();
+
+
+
 /**
 *@brief Initializes the elevator to reach a defined floor. Default direction down.
 
 *@return The floor the elevator finds.
 */
 int elevator_init();
+
+
 
 /**
  * @brief Clears all order lights.
@@ -79,13 +99,7 @@ void elevator_clear_orders_on_floor(int floor);
  */
 Software_state elevator_movement_from_floor(int order_floor,int current_floor);
 
-/**
- * @brief Checks if the elevator is at a defined floor or passing by a defined floor.
- * 
- * @return 0 if 1.st floor, 1 if 2.nd , 2 if 3.rd and 3 if 4.th.
- * -1 if the elevator finds itself between floors.
- */
-int elevator_at_floor();
+
 
 /**
  * @brief Decides which state the elevator should enter from the state idle.

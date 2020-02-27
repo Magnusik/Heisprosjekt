@@ -1,3 +1,10 @@
+/**
+ * @file
+ * @brief Timer module.
+ * 
+ * Functions for keeping track of time.
+ */
+
 #ifndef TIMER_H
 #define TIMER_H
 #include <time.h> 
@@ -6,6 +13,7 @@
 
 
 /**
+ * @file
  * @brief Starts timer.  
  */
 void timer_start();
