@@ -4,17 +4,6 @@
 #include <stdio.h> 
 #include <unistd.h>
 
-/**
- * @file
- * @brief 1 if timer is active, 0 if timer is inactive.
- */
-int timer_active;
-
-/**
- * @brief A time reference.
- */
-time_t time_stamp;
-
 
 /**
  * @brief Starts timer.  

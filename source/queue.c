@@ -62,13 +62,3 @@ int queue_check_order_above(int current_floor_is){
     }
     return 0;
 }
-
-
-void print_matrix(){
-  for(int i = 0; i < 4; i++){
-    for (int j = 0; j<3; j++){
-      printf("%d",order_button_matrix[i][j]);
-    }
-    printf("\n");
-  }
-}

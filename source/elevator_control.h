@@ -17,21 +17,32 @@
 
 typedef enum {
   Software_state_waiting,
-  Software_state_idle,
+  Software_state_idle,     //Elevator has active orders, but is at a halt. 
   Software_state_moving_up,
   Software_state_moving_down,
   Software_state_stop
 }Software_state;
 
+
 /**
-*@brief Initializes the program to reach a defined floor. Starts with @c hardware_command_movement direction down.
-*@return int of @p current_floor, -1 if it didnt reach a floor sensor.
+ * @brief Which orders should be prioritised in @c elevator_movement_from_idle.
+ */
+typedef enum {
+    PRIORITY_DOWN,
+    PRIORITY_UP,
+    PRIORITY_RESET
+} Order_priority;
+
+
+/**
+*@brief Initializes the elevator to reach a defined floor. Default direction down.
+
+*@return The floor the elevator finds.
 */
 int elevator_init();
 
 /**
  * @brief Clears all order lights.
- * 
  */
 void elevator_clear_all_order_lights();
 
@@ -39,31 +50,31 @@ void elevator_clear_all_order_lights();
 
 /**
  * @brief Takes new orders and updates lights accordingly
- * 
  */
-
 void elevator_update_orders();
 
 
 /**
- * @brief Removes all orders and distinguises all order lights.
- * 
+ * @brief Removes all orders and extinguishes all order lights.
  */
 void elevator_clear_all_orders();
 
 
 /**
- * @brief Removes all orders on @p floor, and distinguishes lights accordingly.
+ * @brief Removes all orders on @p floor, and extinguishes lights accordingly.
+ * 
+ * @param floor The floor the lights should be extinguished in.
  * 
  */
 void elevator_clear_orders_on_floor(int floor);
 
 
 /**
- * @brief Decides if the elevator should go up or 
- * down depending on the order given and the floor the elevator finds itself in.
+ * @brief Decides which state the elevator should enter from the state idle.
+ * 
  * @param order_floor Floor of the order given. 
  * @param current_floor The floor the elevator is currently in.
+ * 
  * @return state
  */
 Software_state elevator_movement_from_floor(int order_floor,int current_floor);
@@ -71,13 +82,13 @@ Software_state elevator_movement_from_floor(int order_floor,int current_floor);
 /**
  * @brief Checks if the elevator is at a defined floor or passing by a defined floor.
  * 
- * 
- * @return 0 if 1.st floor, 1 if 2.nd , 2 if 3.rd and 3 if 4.th. -1 if the elevator finds itself between floors.
+ * @return 0 if 1.st floor, 1 if 2.nd , 2 if 3.rd and 3 if 4.th.
+ * -1 if the elevator finds itself between floors.
  */
 int elevator_at_floor();
 
 /**
- * @brief Calculates which state the elevator should enter from the state idle.
+ * @brief Decides which state the elevator should enter from the state idle.
  * 
  * @param current_floor The floor the elevator is currently in.
  * @param previous_direction The direction the elevator had before it enter the idle state.

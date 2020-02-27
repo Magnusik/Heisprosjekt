@@ -8,6 +8,7 @@
 
 
 
+time_t time_stamp;
 
 int timer_active = 0;
 
