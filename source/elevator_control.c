@@ -57,6 +57,7 @@ void elevator_clear_orders_on_floor(int floor){
     }
 }
 
+static HardwareOrder order_direction = ORDER_INSIDE;
 
 Software_state elevator_movement_from_floor(int order_floor_is,int current_floor_is){
   if(order_floor_is > current_floor_is){
@@ -80,7 +81,6 @@ int elevator_at_floor(){
   return -1;
 }
 
-static HardwareOrder order_direction;
 
 
 
@@ -120,33 +120,34 @@ Software_state elevator_movement_from_idle(int current_floor, HardwareMovement p
       return Software_state_moving_up;
     }
     else {
-      return Software_state_waiting; /////////////////////////muligens feil.
+       /////////////////////////muligens feil.
     }
+    return Software_state_waiting;
 }
 
 
 
 
-HardwareMovement elevator_movement_at_floor_for_moving_up(int current_floor_is){
+HardwareMovement elevator_movement_at_floor_for_moving_up(int current_floor){
 
-  if(current_floor_is == (HARDWARE_NUMBER_OF_FLOORS -1)){
+  if(current_floor == (HARDWARE_NUMBER_OF_FLOORS -1)){
     order_direction = ORDER_INSIDE; ////
     return HARDWARE_MOVEMENT_STOP;
   }
 
-  if (current_floor_is == 0){
+  if (current_floor == 0){
     order_direction = ORDER_INSIDE;////
     return HARDWARE_MOVEMENT_UP;
   }
 
   for (int order_type = 0; order_type < (HARDWARE_NUMBER_OF_ORDER_BUTTONS -1); order_type++){  //Sjekker om det er ordre i samme retning eller ordre fra kabinen, i den etasjen den kommer til.
-    if(queue_check_order(current_floor_is, order_type)){
+    if(queue_check_order(current_floor, order_type)){
       order_direction = ORDER_INSIDE; ////
       return HARDWARE_MOVEMENT_STOP;
     }
   }
 
-  for(int f = (current_floor_is + 1); f < HARDWARE_NUMBER_OF_FLOORS; f++ ){
+  for(int f = (current_floor + 1); f < HARDWARE_NUMBER_OF_FLOORS; f++ ){
     for (int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++){
       if (queue_check_order(f, order_type)){
         order_direction = ORDER_INSIDE; ////
@@ -154,7 +155,7 @@ HardwareMovement elevator_movement_at_floor_for_moving_up(int current_floor_is){
       }
     }
   }
-  if (queue_check_order(current_floor_is, 2)){
+  if (queue_check_order(current_floor, 2)){
     order_direction = ORDER_DOWN; ////
     return HARDWARE_MOVEMENT_STOP;
   }
@@ -166,27 +167,27 @@ return HARDWARE_MOVEMENT_UP;
 
 
 
-HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor_is){
+HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor){
 
-  if(current_floor_is == 0 ){
+  if(current_floor == 0 ){
     order_direction = ORDER_INSIDE; ////
     return HARDWARE_MOVEMENT_STOP;
   }
 
-  if (current_floor_is == 3){
+  if (current_floor == 3){
     order_direction = ORDER_INSIDE; ////
     return HARDWARE_MOVEMENT_DOWN;
   }
 
   for (int order_type  = 1; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS ; order_type++){ //Sjekker om det er ordre i samme retning eller ordre fra kabinen, i den etasjen den kommer til.
-    if(queue_check_order(current_floor_is, order_type)){
+    if(queue_check_order(current_floor, order_type)){
       order_direction = ORDER_INSIDE; ////
       return HARDWARE_MOVEMENT_STOP;
       
     }
   }
 
-  for (int f = 0; f < current_floor_is; f++){
+  for (int f = 0; f < current_floor; f++){
     for(int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++){
       if (queue_check_order(f, order_type)){
         order_direction = ORDER_INSIDE;  ////
@@ -195,7 +196,7 @@ HardwareMovement elevator_movement_at_floor_for_moving_down(int current_floor_is
     }
   }
 
-  if (queue_check_order(current_floor_is, 0)){
+  if (queue_check_order(current_floor, 0)){
     order_direction = ORDER_UP; ////
     return HARDWARE_MOVEMENT_STOP;
   }
