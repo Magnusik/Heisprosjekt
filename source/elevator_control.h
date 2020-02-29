@@ -67,6 +67,14 @@ int elevator_init();
 void elevator_clear_all_order_lights();
 
 
+/**
+ * @brief Checks if any order is given.
+ * 
+ * @return Floor where the order was given, -1 if no orders.
+ */
+int elevator_check_orders_waiting();
+
+
 
 /**
  * @brief Takes new orders and updates lights accordingly

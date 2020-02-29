@@ -23,17 +23,6 @@ int queue_check_order(int floor, int order_type){
 }
 
 
-int queue_check_orders_waiting(){
-    for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
-        for (int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++ ){
-            if(order_button_matrix[f][order_type] == 1){
-                return f;
-            }
-        }
-    }
-    return -1;
-}
-
 
 int queue_check_order_below(int current_floor){
     if(current_floor == 0){

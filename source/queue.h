@@ -54,15 +54,6 @@ int queue_check_order(int floor, int order_type);
 
 
 
-/**
- * @brief Checks if any order is given.
- * 
- * @return Floor where the order was given, -1 if no orders.
- */
-int queue_check_orders_waiting();
-
-
-
 
 /**
  * @brief Checks if there are orders to floors below the @p current_floor.

@@ -1,9 +1,4 @@
-#include <time.h> 
-#include <stdio.h> 
-#include <unistd.h>
 #include "timer.h"
-#include "queue.h"
-#include "hardware.h"
 
 
 time_t time_stamp;

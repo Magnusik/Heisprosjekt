@@ -32,6 +32,18 @@ void elevator_clear_all_order_lights(){
 }
 
 
+int elevator_check_orders_waiting(){
+    for(int f = 0; f < HARDWARE_NUMBER_OF_FLOORS; f++){
+        for (int order_type = 0; order_type < HARDWARE_NUMBER_OF_ORDER_BUTTONS; order_type++ ){
+            if(queue_check_order(f, order_type)){
+                return f;
+            }
+        }
+    }
+    return -1;
+}
+
+
 
 void elevator_update_orders(){
     for (int floor = 0; floor < HARDWARE_NUMBER_OF_FLOORS; floor++){
@@ -88,7 +100,7 @@ Software_state elevator_movement_from_floor(int order_floor_is,int current_floor
 
 
 Software_state elevator_movement_from_idle(int current_floor, HardwareMovement previous_direction){
-    if(queue_check_orders_waiting() == NO_ORDERS){
+    if(elevator_check_orders_waiting() == NO_ORDERS){
         return Software_state_waiting;
     }
 
